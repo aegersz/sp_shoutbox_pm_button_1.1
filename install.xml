@@ -1,0 +1,48 @@
+<?xml version="1.1"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<id>phantom:sp_shoutbox_pm_button</id>
+	<name>Shoutbox PM button - SimplePortal 2.3.6</name>
+	<version>1.1</version>
+
+	<file name="$themedir/PortalShoutbox.template.php">
+		<operation>
+			<search position="replace"><![CDATA[<li class="smalltext">', !$shout['is_me'] ? '<strong>' . $shout['author']['link'] . ':</strong> ' : '', '<span style="word-wrap: break-word;overflow-y: auto;overflow-x: hidden;">' . $shout['text'], '</span><br /><span class="shoutbox_delete">', (!empty($shout['edit_link_js']) ? $shout['edit_link_js'] : '&nbsp;'), (!empty($shout['delete_link_js']) ? $shout['delete_link_js'] : '&nbsp;'), '</span><span class="smalltext shoutbox_time">', $shout['time'], '</span></li>';]]></search>
+			<add><![CDATA[<li class="smalltext">', !$shout['is_me'] ? '<a href="javascript:void(0);" title="'.$txt['sp_shoutbox_pm_title'].'" onclick="document.getElementById(\'new_shout_'. $shoutbox['id']. '\').value=\'@' . $shout['author']['name'] . ': \'">@</a><strong>' . $shout['author']['link'] . ':</strong> ' : '', '<span style="word-wrap: break-word;overflow-y: auto;overflow-x: hidden;">' . $shout['text'], '</span><br /><span class="shoutbox_delete">', (!empty($shout['edit_link_js']) ? $shout['edit_link_js'] : '&nbsp;'), (!empty($shout['delete_link_js']) ? $shout['delete_link_js'] : '&nbsp;'), '</span><span class="smalltext shoutbox_time">', $shout['time'], '</span></li>';]]></add>
+		</operation>
+
+		<operation>
+			<search position="replace"><![CDATA[		<author>', htmlspecialchars($shout['author']['link']), '</author>]]></search>
+			<add><![CDATA[		<author>', htmlspecialchars($shout['author']['link']), '</author>
+		<author_name>', htmlspecialchars($shout['author']['name']), '</author_name>
+		<author_name_txt>', $txt['sp_shoutbox_pm_title'] , '</author_name_txt>]]></add>
+		</operation>
+	</file>
+
+	<file name="$languagedir/SPortal.english.php">
+		<operation>
+			<search position="end"></search>
+			<add><![CDATA[$txt['sp_shoutbox_pm_title'] = 'Send Shoutbox PM';]]></add>
+		</operation>
+	</file>
+
+	<file name="$themedir/scripts/portal.js">
+		<operation>
+			<search position="replace"><![CDATA[, author,]]></search>
+			<add><![CDATA[, author, author_name, author_name_txt,]]></add>
+		</operation>
+
+		<operation>
+			<search position="replace"><![CDATA[				author = shout.getElementsByTagName("author")[0].childNodes[0].nodeValue;]]></search>
+			<add><![CDATA[				author = shout.getElementsByTagName("author")[0].childNodes[0].nodeValue;
+				author_name = shout.getElementsByTagName("author_name")[0].childNodes[0].nodeValue;
+				author_name_txt = shout.getElementsByTagName("author_name_txt")[0].childNodes[0].nodeValue;]]></add>
+		</operation>
+
+		<operation>
+			<search position="replace"><![CDATA[new_body += '<li class="smalltext">' + (is_me == 0 ? '<strong>' + author + ':</strong> ' : '') + content + '<br />' + (delete_link != 0 ? ('<span class="shoutbox_delete">' + delete_link + '</span>') : '') + (edit_link != 0 ? ('<span class="shoutbox_delete">' + edit_link + '</span>') : '') + '<span class="smalltext shoutbox_time">' + time + '</span></li>';]]></search>
+			<add><![CDATA[new_body += '<li class="smalltext">' + (is_me == 0 ? '<a href="javascript:void(0);" title="'+ author_name_txt +'" onclick="document.getElementById(\'new_shout_'+ shoutbox_id +'\').value=\'@' + author_name + ': \'">@</a><strong>' + author + ':</strong> ' : '') + content + '<br />' + (delete_link != 0 ? ('<span class="shoutbox_delete">' + delete_link + '</span>') : '') + (edit_link != 0 ? ('<span class="shoutbox_delete">' + edit_link + '</span>') : '') + '<span class="smalltext shoutbox_time">' + time + '</span></li>';]]></add>
+		</operation>
+	</file>
+</modification>
+

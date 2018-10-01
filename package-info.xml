@@ -1,0 +1,17 @@
+<?xml version="1.1"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<id>phantom:sp_shoutbox_pm_button</id>
+	<name>Shoutbox PM button - SimplePortal 2.3.6</name>
+	<version>1.1</version>
+
+	<install for="2.0 - 2.0.99">
+		<modification format="xml" type="file">install.xml</modification>
+	</install>
+
+	<uninstall for="2.0 - 2.0.99">
+		<modification format="xml" type="file" reverse="true">install.xml</modification>
+		<redirect type="inline" url="$scripturl?action=admin;area=packages">You are being automatically redirected to the Package Manager Page...</redirect>
+	</uninstall>
+</package-info>
+
